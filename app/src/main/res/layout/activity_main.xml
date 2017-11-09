@@ -15,6 +15,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:fontFamily="monospace"/>
+        android:fontFamily="@font/square_source_ttf" />
 
 </android.support.constraint.ConstraintLayout>
