@@ -5,6 +5,7 @@ public class CellularAutomata {
     private ArrayList<Integer> cells_;
     private ArrayList<Integer> nextGenBufferedCells_;
     private StringBuilder representation_;
+    private char liveCellChar_;
     private int height_;
     private int width_;
 
@@ -125,14 +126,14 @@ public class CellularAutomata {
         for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
             setCell(elementNumber, getNextGenCell(elementNumber));
         }
+        updateRepresentation();
     }
     public void calculateNextGen(){
         int neighborSum = 0;
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
             for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
                 neighborSum = sumOfNeighbors(rowIndex, columnIndex);
-
-                if(( neighborSum < 2 || neighborSum > 3 ) || (neighborSum == 2 && getCell(rowIndex, columnIndex) == 0)){
+                if(( neighborSum < 2 || neighborSum > 3 ) || (neighborSum == 2 && getCell(rowIndex, columnIndex).equals( 0))){
                     setCell(rowIndex,columnIndex,0, nextGenBufferedCells_);
                 } else {
                     setCell(rowIndex,columnIndex,1, nextGenBufferedCells_);
@@ -141,13 +142,13 @@ public class CellularAutomata {
         }
     }
     public int sumOfNeighbors(int row, int column){
-        int leftNeighborIndex = 0;
-        int rightNeighborIndex = 0;
-        int upperNeighborIndex = 0;
-        int lowerNeighborIndex = 0;
+        int leftNeighborIndex = column - 1;
+        int rightNeighborIndex = column + 1;
+        int upperNeighborIndex = row - 1;
+        int lowerNeighborIndex = row + 1;
         if(row == 0){
             upperNeighborIndex = getHeight() - 1;
-        } else if(row == getWidth() - 1){
+        } else if(row == getHeight() - 1){
             lowerNeighborIndex = 0;
         }
         if(column == 0){
@@ -156,11 +157,21 @@ public class CellularAutomata {
             rightNeighborIndex = 0;
         }
         int result = 0;
+//        int UL = getCell(upperNeighborIndex, leftNeighborIndex);
+//        int UO = getCell(upperNeighborIndex, column);
+//        int UR = getCell(upperNeighborIndex, rightNeighborIndex);
+//        int OL = getCell(row, leftNeighborIndex);
+//        int OO = getCell(row, column);
+//        int OR = getCell(row, rightNeighborIndex);
+//        int LL = getCell(lowerNeighborIndex, leftNeighborIndex);
+//        int LO = getCell(lowerNeighborIndex, column);
+//        int LR = getCell(lowerNeighborIndex, rightNeighborIndex);
+
         result += getCell(upperNeighborIndex, leftNeighborIndex);
         result += getCell(upperNeighborIndex, column);
         result += getCell(upperNeighborIndex, rightNeighborIndex);
         result += getCell(row, leftNeighborIndex);
-        result += getCell(row, column);
+//        result += getCell(row, column); // not a neighbor lol
         result += getCell(row, rightNeighborIndex);
         result += getCell(lowerNeighborIndex, leftNeighborIndex);
         result += getCell(lowerNeighborIndex, column);

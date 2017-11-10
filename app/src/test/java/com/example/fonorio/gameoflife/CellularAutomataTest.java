@@ -104,6 +104,52 @@ public class CellularAutomataTest {
         cellularAutomaton.updateCurrentGen();
         assertArrayEquals(secondGen, cellularAutomaton.getPrimitiveArrayRepresentation());
     }
+    @Test
+    public void randomPatternWorks1() throws Exception {
+        CellularAutomata cellularAutomaton = new CellularAutomata(5,5);
+        int[] firstGen = {
+                0,0,0,0,0,
+                0,1,1,0,0,
+                0,0,1,1,0,
+                0,0,1,0,0,
+                0,0,0,0,0,
+        };
+        int[] secondGen = {
+                0,0,0,0,0,
+                0,1,1,1,0,
+                0,0,0,1,0,
+                0,0,1,1,0,
+                0,0,0,0,0,
+        };
+        cellularAutomaton.setCells(firstGen);
+        cellularAutomaton.updateCurrentGen();
+        int[] currentGen = cellularAutomaton.getPrimitiveArrayRepresentation();
+//        String stringRepresentation = cellularAutomaton.getStringRepresentation();
+        assertArrayEquals(secondGen, currentGen);
+    }
+    @Test
+    public void randomPatternWorks2() throws Exception {
+        CellularAutomata cellularAutomaton = new CellularAutomata(5,5);
+        int[] firstGen = {
+                0,0,0,0,0,
+                0,0,0,0,0,
+                0,1,1,1,0,
+                0,0,0,0,0,
+                0,0,0,0,0,
+        };
+        int[] secondGen = {
+                0,0,0,0,0,
+                0,0,1,0,0,
+                0,0,1,0,0,
+                0,0,1,0,0,
+                0,0,0,0,0,
+        };
+        cellularAutomaton.setCells(firstGen);
+        cellularAutomaton.updateCurrentGen();
+//        String stringRepresentation = cellularAutomaton.getStringRepresentation();
+        int[] currentGen = cellularAutomaton.getPrimitiveArrayRepresentation();
+        assertArrayEquals(secondGen, currentGen);
+    }
 
     @Test
     public void stringRepresentationLengthIsCorrect() throws Exception {
