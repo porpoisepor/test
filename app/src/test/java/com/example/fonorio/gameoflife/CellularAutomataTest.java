@@ -37,7 +37,7 @@ public class CellularAutomataTest {
     public void charOfSomeStringRepresentationValueIsOne() throws Exception {
         CellularAutomata cellularAutomaton = new CellularAutomata(5,5);
         char cellAsChar = cellularAutomaton.getCellAsChar(2,2);
-        assertEquals('1', cellAsChar);
+        assertEquals('O', cellAsChar);
     }
     @Test
     public void charOfSomeStringRepresentationValueDoesNotChangeBeforeUpdate() throws Exception {
@@ -45,7 +45,7 @@ public class CellularAutomataTest {
         cellularAutomaton.setCell(2,2,0);
 //        cellularAutomaton.updateRepresentation();
         char cellAsChar = cellularAutomaton.getCellAsChar(2,2);
-        assertEquals('1', cellAsChar);
+        assertEquals('O', cellAsChar);
     }
     @Test
     public void charOfSomeStringRepresentationValueCanBeChanged() throws Exception {
@@ -53,7 +53,7 @@ public class CellularAutomataTest {
         cellularAutomaton.setCell(2,2,0);
         cellularAutomaton.updateRepresentation();
         char cellAsChar = cellularAutomaton.getCellAsChar(2,2);
-        assertEquals('0', cellAsChar);
+        assertEquals('.', cellAsChar);
     }
     @Test
     public void primitiveArrayRepresentationWorks() throws Exception {

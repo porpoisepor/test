@@ -6,12 +6,15 @@ public class CellularAutomata {
     private ArrayList<Integer> nextGenBufferedCells_;
     private StringBuilder representation_;
     private char liveCellChar_;
+    private char deadCellChar_;
     private int height_;
     private int width_;
 
     CellularAutomata(int height, int width){
         setHeight(height);
         setWidth(width);
+        setLiveCellChar('O');
+        setDeadCellChar('.');
         setRepresentation(new StringBuilder(getSize() + getHeight()));
         setCells( new ArrayList<Integer>(height * width));
         setNextGenBufferedCells( new ArrayList<Integer>(height * width));
@@ -72,6 +75,18 @@ public class CellularAutomata {
     public char getCellAsChar(int row, int column){
         return representation_.charAt(row*(getWidth()+1) + column);
     }
+    public char getLiveCellChar() {
+        return liveCellChar_;
+    }
+    public void setLiveCellChar(char liveCellChar) {
+        this.liveCellChar_ = liveCellChar;
+    }
+    public char getDeadCellChar() {
+        return deadCellChar_;
+    }
+    public void setDeadCellChar(char deadCellChar) {
+        this.deadCellChar_ = deadCellChar;
+    }
     public void setCell(int row, int column, int value) {
         cells_.set(row * getWidth() + column, value);
     }
@@ -104,7 +119,7 @@ public class CellularAutomata {
     private void setupRepresentation() {
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
             for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
-                representation_.append(getCell(rowIndex, columnIndex).toString().charAt(0));
+                representation_.append(isCellAlive(rowIndex, columnIndex) ? getLiveCellChar() : getDeadCellChar());
             }
             representation_.append('X');
         }
@@ -112,9 +127,13 @@ public class CellularAutomata {
     public void updateRepresentation() {
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
             for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
-                representation_.setCharAt(rowIndex*(getWidth()+1) + columnIndex, getCell(rowIndex,columnIndex).toString().charAt(0));
+//                representation_.setCharAt(rowIndex*(getWidth()+1) + columnIndex, getCell(rowIndex,columnIndex).toString().charAt(0));
+                representation_.setCharAt(rowIndex*(getWidth()+1) + columnIndex, isCellAlive(rowIndex, columnIndex) ? getLiveCellChar() : getDeadCellChar());
             }
         }
+    }
+    private boolean isCellAlive(int row, int column) {
+        return getCell(row, column) == 1;
     }
     private void setNewlines() {
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
