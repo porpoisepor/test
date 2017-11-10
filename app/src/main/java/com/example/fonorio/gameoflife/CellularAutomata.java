@@ -25,8 +25,16 @@ public class CellularAutomata {
     public ArrayList<Integer> getCells() {
         return cells_;
     }
+    private ArrayList<Integer> getNextGenCells() {
+        return nextGenBufferedCells_;
+    }
     public void setCells(ArrayList<Integer> cells) {
         this.cells_ = cells;
+    }
+    public void setCells(int[] primitiveArray) {
+        for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
+            setCell(elementNumber, primitiveArray[elementNumber]);
+        }
     }
     public void setNextGenBufferedCells(ArrayList<Integer> cells) {
         nextGenBufferedCells_ = cells;
@@ -37,6 +45,13 @@ public class CellularAutomata {
     public String getStringRepresentation() {
         return representation_.toString();
     }
+    public int[] getPrimitiveArrayRepresentation() {
+        int[] intRepresentation = new int[getSize()];
+        for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
+            intRepresentation[elementNumber] = getCell(elementNumber);
+        }
+        return intRepresentation;
+    }
     public void setRepresentation(StringBuilder representation) {
         this.representation_ = representation;
     }
@@ -44,8 +59,14 @@ public class CellularAutomata {
     public Integer getCell(int row, int column){
         return getCells().get(row * getWidth() + column);
     }
+    private Integer getNextGenCell(int row, int column){
+        return getNextGenCells().get(row * getWidth() + column);
+    }
     public Integer getCell(int elementNumber){
         return getCells().get(elementNumber);
+    }
+    private Integer getNextGenCell(int elementNumber){
+        return getNextGenCells().get(elementNumber);
     }
     public char getCellAsChar(int row, int column){
         return representation_.charAt(row*(getWidth()+1) + column);
@@ -55,6 +76,14 @@ public class CellularAutomata {
     }
     public void setCell(int row, int column, int value, ArrayList<Integer> cellArray) {
         cellArray.set(row * getWidth() + column, value);
+    }
+    public void setCell(int elementNumber, int value) {
+        cells_.set(elementNumber, value);
+    }
+    public void setAllCells(int value) {
+        for(Integer cell: cells_){
+            cell = value;
+        }
     }
     public int getHeight() {
         return height_;
@@ -93,7 +122,9 @@ public class CellularAutomata {
     }
     public void updateCurrentGen(){
         calculateNextGen();
-//        for()
+        for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
+            setCell(elementNumber, getNextGenCell(elementNumber));
+        }
     }
     public void calculateNextGen(){
         int neighborSum = 0;
