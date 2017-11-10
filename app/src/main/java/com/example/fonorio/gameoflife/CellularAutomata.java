@@ -73,8 +73,8 @@ public class CellularAutomata {
         setNextGenBufferedCells( new ArrayList<Integer>(height * width));
         for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
 //            cells_.set(elementNumber, new Integer(1));
-            cells_.add(elementNumber, new Integer(1));
-            nextGenBufferedCells_.add(elementNumber, new Integer(1));
+            cells_.add(elementNumber, 1);
+            nextGenBufferedCells_.add(elementNumber, 1);
         }
         setupRepresentation();
         setNewlines();
