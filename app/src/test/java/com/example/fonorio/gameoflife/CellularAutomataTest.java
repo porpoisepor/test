@@ -4,9 +4,6 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-/**
- * Created by win_second_lobster on 11/9/2017.
- */
 public class CellularAutomataTest {
     @Test
     public void addition_isCorrect() throws Exception {

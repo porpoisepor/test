@@ -1,78 +1,20 @@
 package com.example.fonorio.gameoflife;
-
 import java.util.ArrayList;
 
 public class CellularAutomata {
     private ArrayList<Integer> cells_;
     private ArrayList<Integer> nextGenBufferedCells_;
-
-    public StringBuilder getRepresentation() {
-        return representation_;
-    }
-
-    public void setRepresentation(StringBuilder representation) {
-        this.representation_ = representation;
-    }
-
     private StringBuilder representation_;
     private int height_;
     private int width_;
-
-    public ArrayList<Integer> getCells() {
-        return cells_;
-    }
-
-    // TODO: abstract the cell into a class instead of just an int value
-    public Integer getCell(int row, int column){
-        return getCells().get(row * getWidth() + column);
-    }
-    public char getCellAsChar(int row, int column){
-        return representation_.charAt(row*(getWidth()+1) + column);
-    }
-    public Integer getCell(int elementNumber){
-        return getCells().get(elementNumber);
-    }
-
-    public void setCell(int row, int column, int value) {
-        cells_.set(row * getWidth() + column, value);
-    }
-
-    public void setCell(int row, int column, int value, ArrayList<Integer> cellArray) {
-        cellArray.set(row * getWidth() + column, value);
-    }
-
-    public void setCells(ArrayList<Integer> cells) {
-        this.cells_ = cells;
-    }
-    public void setNextGenBufferedCells(ArrayList<Integer> cells) {
-        nextGenBufferedCells_ = cells;
-    }
-
-    public int getHeight() {
-        return height_;
-    }
-
-    public void setHeight(int height) {
-        this.height_ = height;
-    }
-
-    public int getWidth() {
-        return width_;
-    }
-
-    public void setWidth(int width) {
-        this.width_ = width;
-    }
 
     CellularAutomata(int height, int width){
         setHeight(height);
         setWidth(width);
         setRepresentation(new StringBuilder(getSize() + getHeight()));
-//        representation_.ensureCapacity(getSize() + getHeight());
         setCells( new ArrayList<Integer>(height * width));
         setNextGenBufferedCells( new ArrayList<Integer>(height * width));
         for(int elementNumber = 0; elementNumber < getSize(); ++elementNumber){
-//            cells_.set(elementNumber, new Integer(1));
             cells_.add(elementNumber, 1);
             nextGenBufferedCells_.add(elementNumber, 1);
         }
@@ -80,7 +22,55 @@ public class CellularAutomata {
         setNewlines();
         updateRepresentation();
     }
-
+    public ArrayList<Integer> getCells() {
+        return cells_;
+    }
+    public void setCells(ArrayList<Integer> cells) {
+        this.cells_ = cells;
+    }
+    public void setNextGenBufferedCells(ArrayList<Integer> cells) {
+        nextGenBufferedCells_ = cells;
+    }
+    public StringBuilder getRepresentation() {
+        return representation_;
+    }
+    public String getStringRepresentation() {
+        return representation_.toString();
+    }
+    public void setRepresentation(StringBuilder representation) {
+        this.representation_ = representation;
+    }
+    // TODO: abstract the cell into a class instead of just an int value
+    public Integer getCell(int row, int column){
+        return getCells().get(row * getWidth() + column);
+    }
+    public Integer getCell(int elementNumber){
+        return getCells().get(elementNumber);
+    }
+    public char getCellAsChar(int row, int column){
+        return representation_.charAt(row*(getWidth()+1) + column);
+    }
+    public void setCell(int row, int column, int value) {
+        cells_.set(row * getWidth() + column, value);
+    }
+    public void setCell(int row, int column, int value, ArrayList<Integer> cellArray) {
+        cellArray.set(row * getWidth() + column, value);
+    }
+    public int getHeight() {
+        return height_;
+    }
+    public void setHeight(int height) {
+        this.height_ = height;
+    }
+    public int getWidth() {
+        return width_;
+    }
+    public void setWidth(int width) {
+        this.width_ = width;
+    }
+    public int getSize() {
+        return getHeight()*getWidth();
+    }
     private void setupRepresentation() {
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
             for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
@@ -88,15 +78,7 @@ public class CellularAutomata {
             }
             representation_.append('X');
         }
-//        getRepresentation().append(getCell(elementNumber).toString().charAt(0));
     }
-
-    private void setNewlines() {
-        for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
-            representation_.setCharAt((rowIndex)* (getWidth()+1)+getWidth(), '\n');
-        }
-    }
-
     public void updateRepresentation() {
         for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
             for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
@@ -104,16 +86,11 @@ public class CellularAutomata {
             }
         }
     }
-
-
-    public String getStringRepresentation() {
-        return representation_.toString();
+    private void setNewlines() {
+        for(int rowIndex = 0; rowIndex < getHeight(); ++rowIndex){
+            representation_.setCharAt((rowIndex)* (getWidth()+1)+getWidth(), '\n');
+        }
     }
-
-    public int getSize() {
-        return getHeight()*getWidth();
-    }
-
     public void updateCurrentGen(){
         calculateNextGen();
 //        for()
@@ -132,7 +109,6 @@ public class CellularAutomata {
             }
         }
     }
-
     public int sumOfNeighbors(int row, int column){
         int leftNeighborIndex = 0;
         int rightNeighborIndex = 0;
@@ -158,11 +134,6 @@ public class CellularAutomata {
         result += getCell(lowerNeighborIndex, leftNeighborIndex);
         result += getCell(lowerNeighborIndex, column);
         result += getCell(lowerNeighborIndex, rightNeighborIndex);
-//        for(int rowIndex = row - 1; rowIndex < row + 1; ++rowIndex){
-//            for(int columnIndex = 0; columnIndex < getWidth(); ++columnIndex){
-//                representation_.setCharAt(rowIndex*(getWidth()+1) + columnIndex, getCell(rowIndex,columnIndex).toString().charAt(0));
-//            }
-//        }
         return result;
     }
 }
