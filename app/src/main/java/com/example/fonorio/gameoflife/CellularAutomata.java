@@ -47,7 +47,7 @@ public class CellularAutomata {
         return representation_;
     }
     public String getStringRepresentation() {
-        return representation_.toString();
+        return representation_.toString();//
     }
     public int[] getPrimitiveArrayRepresentation() {
         int[] intRepresentation = new int[getSize()];
